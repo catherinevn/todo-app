@@ -5,8 +5,8 @@ const router = express.Router();
 
 const dynamoDB = new AWS.DynamoDB.DocumentClient({
     region: "us-east-2",
-    accessKeyId: "AKIA5HCZRDOBYX5FKPXS",
-    secretAccessKey: "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"
+    accessKeyId: "",
+    secretAccessKey: ""
 })
 
 // get all to-dos
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
         TableName: "todos"
     };
 
-    dynamoDB.query(params, function (err, data) {
+    dynamoDB.scan(params, function (err, data) {
         if (err) {
             console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
         } else {
@@ -29,10 +29,12 @@ router.get('/', (req, res) => {
 
 // add to-do
 router.post('/', (req, res) => {
+    const date = new Date();
     const params = {
         TableName : "todos",
         Item : {
-            "task": req.body.todo
+            "task": req.body.todo,
+            "time": date.toUTCString()
         }
     }
     dynamoDB.put(params, function(err, data) {
@@ -43,6 +45,24 @@ router.post('/', (req, res) => {
         }
     });
     res.redirect('/');
+})
+
+// delete to-dos
+router.delete('/', (req, res) => {
+    const params = {
+        TableName: "todos",
+        Item: {
+            "task": req.body.todo
+        }
+    };
+
+    dynamoDB.delete(params, function (err, data) {
+        if (err) {
+            console.error("Unable to delete. Error:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Successfully deleted.");
+        }
+    })
 })
 
 module.exports = router

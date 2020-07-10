@@ -1,4 +1,4 @@
-<h1 class = "text-center mb-3">{{title}}</h1>
+<h1 class = "text-center mb-3">To-Do List</h1>
 
 <form action = "/database" method = "POST" class = "mb-4">
 <div class = "form-group">
@@ -11,8 +11,9 @@
 <br>
 
 <h4>Current To-Dos</h4>
-<ul class = "list-group">
+<ul class = "list-group" action="/" method="GET">
   {{#each items}}
-  <li class = "list-group-item">{{this.task}}</li>
+  <li class="list-group-item" action="/" method="DELETE">{{this.task}}
+  <div style="color:gray;font:italic;">{{this.time}}</div><button type="submit" class="btn btn-danger" style="float:right;">Delete</button></li>
   {{/each}}
 </ul>

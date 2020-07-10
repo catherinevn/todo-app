@@ -12,14 +12,15 @@ app.set('view engine', 'handlebars');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use('/', require('./routes/database'));
+app.use('/database', require('./routes/database'));
+
 // homepage route
 app.get('/', (req, res) => {
   res.render('index', {
     title: 'To-Do List'
   });
 })
-
-app.use('/database', require('./routes/database'));
 
 const PORT = process.env.port || 5000;
 
