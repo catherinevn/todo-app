@@ -45,17 +45,17 @@ router.post('/', (req, res) => {
         }
     });
     res.redirect('/');
-})
+});
 
 // delete to-dos
-router.delete('/', (req, res) => {
+router.get('/:todo', (req, res) => {
     const params = {
         TableName: "todos",
-        Item: {
-            "task": req.body.todo
+        Key: {
+            "task": req.params.todo
         }
     };
-
+  
     dynamoDB.delete(params, function (err, data) {
         if (err) {
             console.error("Unable to delete. Error:", JSON.stringify(err, null, 2));
@@ -63,6 +63,6 @@ router.delete('/', (req, res) => {
             console.log("Successfully deleted.");
         }
     })
-})
+  });
 
 module.exports = router
