@@ -9,7 +9,7 @@
   "author": "Catherine Nguyen",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.713.0",
+    "aws-sdk": "^2.814.0",
     "dynamodb": "^1.2.1",
     "express": "^4.17.1",
     "express-handlebars": "^5.0.0"
